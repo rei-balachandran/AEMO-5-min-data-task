@@ -1,0 +1,6 @@
+black==23.10.1
+dask==2023.10.1
+pandas==2.1.2
+plotnine==0.12.4
+requests==2.31.0
+swifter==1.4.0
