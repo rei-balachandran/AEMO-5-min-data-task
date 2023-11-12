@@ -29,3 +29,7 @@ pip install -r requirements.txt
 python src/extract_prices_and_plot.py --start_date 20221201 --end_date 20231101 --num_threads 30
 ```
 6. The visualisation of each state will be in the `plot` directory
+
+**Note**: A`duplicate_check.py` module has also been included to check for duplicate data from 
+the interval csv data. However, the output of this script did not indication any instances of 
+duplicate values in any of the interval csf data.

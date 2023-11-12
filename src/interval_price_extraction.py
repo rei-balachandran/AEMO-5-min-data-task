@@ -62,7 +62,9 @@ def extract_interval_data_into_csv(file_path: str):
         )
 
 
-def extract_interval_data_into_csv_multithreaded(source_path: str, num_threads: int = 10):
+def extract_interval_data_into_csv_multithreaded(
+    source_path: str, num_threads: int = 10
+):
     csv_files_pattern = f"{source_path}/*.CSV"
     csv_file_paths = glob.glob(csv_files_pattern)
     csv_file_names = [
@@ -71,7 +73,8 @@ def extract_interval_data_into_csv_multithreaded(source_path: str, num_threads: 
     with concurrent.futures.ThreadPoolExecutor(max_workers=num_threads) as executor:
         # Submit tasks to the thread pool
         futures = [
-            executor.submit(extract_interval_data_into_csv, file) for file in csv_file_names
+            executor.submit(extract_interval_data_into_csv, file)
+            for file in csv_file_names
         ]
 
         # Wait for all threads to complete

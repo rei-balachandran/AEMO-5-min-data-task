@@ -74,17 +74,49 @@ def long_format_conversion(dataframe: pd.DataFrame) -> pd.DataFrame:
     return long_format_df
 
 
-def create_visualisation(dataframe: pd.DataFrame, title: str, output_file_name: str) -> None:
+def create_visualisation(
+    dataframe: pd.DataFrame, title: str, output_file_name: str
+) -> None:
     """file_name: must include extension, eg abc.png"""
+    dataframe["percentiles"] = pd.Categorical(
+        dataframe["percentiles"],
+        categories=[
+            "1st_percentile",
+            "10th_percentile",
+            "50th_percentile",
+            "90th_percentile",
+            "99th_percentile",
+        ],
+        ordered=True,
+    )
+
     plot = (
         ggplot(
-            dataframe, aes(x="30_min_interval", y="aud_per_MWh", color="percentiles", group="percentiles")
+            dataframe,
+            aes(
+                x="30_min_interval",
+                y="aud_per_MWh",
+                color="percentiles",
+                group="percentiles",
+            ),
         )
         + geom_point()
         + geom_line()
-        + labs(title=title, x="Time Interval in 30 Minutes", y="Price ($/MWh)")
-        + theme(axis_text_x=element_text(angle=45, hjust=1))
-        + theme_light()
+        + labs(
+            title=title,
+            x="Time Interval (30 Minutes)",
+            y="Price ($/MWh)",
+            color="Percentiles",
+        )
+        + theme_bw()
+        + theme(
+            plot_title=element_text(size=20, ha="center"),
+            axis_title=element_text(size=15),
+            axis_text_x=element_text(size=12, rotation=45, hjust=5),
+            axis_text_y=element_text(size=12),
+            legend_title=element_text(size=15),
+            legend_text_legend=element_text(size=12),
+        )
     )  # TODO: need proper formatting of legends-ordering, colour etc.
     plot.save(f"plot/{output_file_name}", width=20, height=12)
 
@@ -94,14 +126,7 @@ if __name__ == "__main__":
     avg_30_min_dataframe = get_time_weighted_avg_30_min_res(grouped_df)
     percentiles_df = create_percentile_df(avg_30_min_dataframe)
     final_df = long_format_conversion(percentiles_df)
-    plot = (
-        ggplot(final_df, aes(x="30_min_interval", y="aud_per_MWh", color="percentiles"))
-        + geom_point()
-        + geom_line()
-        + labs(title="Vic", x="interval", y="$")
-        + theme_light()
-    )
-    plot.save("vic_plot.png", width=20, height=12)
+    create_visualisation(final_df, "Victoria plot", "vic.png")
     print(final_df.head(20))
 
 # /Users/reibalachandran/.pyenv/versions/AEMO5MinDataTask/bin/python /Users/reibalachandran/Desktop/PythonProjects/AEMO-5-min-data-task/src/analytics.py

@@ -35,3 +35,8 @@ def get_30_min_intervals() -> List:
         time += timedelta(minutes=30)
 
     return time_intervals
+
+
+if __name__ == "__main__":
+    time = get_30_min_intervals()
+    print("")
