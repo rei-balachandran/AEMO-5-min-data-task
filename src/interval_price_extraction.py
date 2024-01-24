@@ -3,6 +3,7 @@ import concurrent.futures
 import glob
 import os
 from typing import List
+from constants import RAW_DATA_INTERVAL_CSV_PATH
 from constants import CLEAN_DATA_INTERVAL_CSV_PATH
 from helpers import convert_midnight_to_previous_day
 
@@ -82,4 +83,4 @@ def extract_interval_data_into_csv_multithreaded(
 
 
 if __name__ == "__main__":
-    extract_interval_data_into_csv_multithreaded(CLEAN_DATA_INTERVAL_CSV_PATH)
+    extract_interval_data_into_csv_multithreaded(RAW_DATA_INTERVAL_CSV_PATH)

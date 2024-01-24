@@ -36,14 +36,7 @@ def get_5_min_interval(file_path: str, region_id: str = None) -> pd.DataFrame:
 
 
 def get_time_weighted_avg_30_min_res(dataframe: pd.DataFrame) -> pd.DataFrame:
-    thirty_min_markers = list(range(0, 288, 6))
-    time_weighted_avg_factor = 5 / 30
-    dataframe["30_min_avg"] = dataframe["price"].swifter.apply(
-        lambda x: [
-            sum(x[thirty_min_marker : thirty_min_marker + 6]) * time_weighted_avg_factor
-            for thirty_min_marker in thirty_min_markers
-        ]
-    )
+    dataframe["30_min_avg"] = dataframe["price"].resample('30T').mean()
     return dataframe
 
 

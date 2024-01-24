@@ -38,5 +38,5 @@ def get_30_min_intervals() -> List:
 
 
 if __name__ == "__main__":
-    time = get_30_min_intervals()
+    date = convert_midnight_to_previous_day("19/12/2022 0:10")
     print("")
