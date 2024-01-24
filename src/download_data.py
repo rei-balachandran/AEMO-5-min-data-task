@@ -31,6 +31,7 @@ def download_interval_data(date: str):
             time.sleep(0.2)
 
 
+
 def download_interval_data_multithreaded(
     start_date: str, end_date: str, num_threads: int = 10
 ):
